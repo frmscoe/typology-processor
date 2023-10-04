@@ -1,8 +1,6 @@
 import './apm';
 import { LoggerService, type DatabaseManagerInstance } from '@frmscoe/frms-coe-lib';
 import { StartupFactory, type IStartupService } from '@frmscoe/frms-coe-startup-lib';
-import cluster from 'cluster';
-import os from 'os';
 import { configuration } from './config';
 import { handleTransaction } from './logic.service';
 import { Singleton } from './services/services';
@@ -63,35 +61,18 @@ process.on('unhandledRejection', (err) => {
   loggerService.error(`process on unhandledRejection error: ${JSON.stringify(err) ?? '[NoMetaData]'}`);
 });
 
-const numCPUs = os.cpus().length > configuration.maxCPU ? configuration.maxCPU + 1 : os.cpus().length + 1;
-
-if (cluster.isPrimary && configuration.maxCPU !== 1) {
-  loggerService.log(`Primary ${process.pid} is running`);
-
-  // Fork workers.
-  for (let i = 1; i < numCPUs; i++) {
-    cluster.fork();
-  }
-
-  cluster.on('exit', (worker, code, signal) => {
-    loggerService.log(`worker ${Number(worker.process.pid)} died, starting another worker`);
-    cluster.fork();
-  });
-} else {
-  // Workers can share any TCP connection
-  // In this case it is an NATS server
-  (async () => {
-    try {
-      if (configuration.env !== 'test') {
-        await dbInit();
-        await runServer();
-      }
-    } catch (err) {
-      loggerService.error(`Error while starting services on Worker ${process.pid}`, err);
-      process.exit(1);
+(async () => {
+  try {
+    if (configuration.env !== 'test') {
+      await dbInit();
+      await runServer();
+      loggerService.log(`typology-processor[${process.pid}] started`);
     }
-  })();
-  loggerService.log(`Worker ${process.pid} started`);
-}
+  } catch (err) {
+    loggerService.error(`Error while starting services on Worker ${process.pid}`, err);
+    process.exit(1);
+  }
+})();
+
 
 export { databaseManager };
