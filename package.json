@@ -36,7 +36,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@cortex-js/compute-engine": "0.20.2",
-    "@frmscoe/frms-coe-lib": "4.0.0",
+    "@frmscoe/frms-coe-lib": "4.1.0",
     "@frmscoe/frms-coe-startup-lib": "2.2.0",
     "arangojs": "^8.8.1",
     "dotenv": "^16.4.5",

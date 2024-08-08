@@ -46,8 +46,6 @@ graph TD;
 
 ![](images/image-20231124-060051.png)
 
-[https://github.com/frmscoe/uml-diagrams/blob/main/TP.plantuml](https://github.com/frmscoe/uml-diagrams/blob/main/TP.plantuml)
-
 ## Outputs
 ```js
 // TADP
@@ -95,7 +93,7 @@ A [registry](https://github.com/frmscoe/docs) of environment variables is provid
 
 ## Usage
 
-### Sample Typology Expression
+### Sample Typology Configuration
 
 ```json
 {
@@ -110,28 +108,48 @@ A [registry](https://github.com/frmscoe/docs) of environment variables is provid
       "id": "003@1.0.0",
       "cfg": "1.0.0",
       "termId": "v003at100at100",
-      "wghts":[
+      "wghts": [
         {
           "ref": ".err",
           "wght": 0
         },
         {
           "ref": ".01",
-          "wght": 0,
+          "wght": 0
         },
         {
           "ref": ".02",
-          "wght": 400,
+          "wght": 400
+        }
+      ]
+    },
+    {
+      "id": "EFRuP@1.0.0",
+      "cfg": "none",
+      "termId": "vEFRuPat100at100",
+      "wghts": [
+        {
+          "ref": "block",
+          "wght": 0
+        },
+        {
+          "ref": "override",
+          "wght": 0
+        },
+        {
+          "ref": "none",
+          "wght": 0
         }
       ]
     }
   ],
   "expression": [
-    "Add",
-    "v003at100at100",
+    "Add", 
+    "v003at100at100", 
     "v003at100at100"
   ]
 }
+
 ```
 
 ### Sample NATS subscription payload
@@ -351,23 +369,16 @@ A [registry](https://github.com/frmscoe/docs) of environment variables is provid
                 "host": "NATS Server",
                 "cfg": "1.0.0",
                 "txTp": "pacs.002.001.12",
-                "channels": [
+                "typologies": [
                     {
-                        "id": "001@1.0.0",
+                        "id": "typology-processor@1.0.0",
                         "host": "NATS Server",
-                        "cfg": "1.0.0",
-                        "typologies": [
+                        "cfg": "001@1.0.0",
+                        "rules": [
                             {
-                                "id": "typology-processor@1.0.0",
-                                "host": "NATS Server",
-                                "cfg": "001@1.0.0",
-                                "rules": [
-                                    {
-                                        "id": "003@1.0.0",
-                                        "host": "RuleRequest003",
-                                        "cfg": "1.0.0"
-                                    }
-                                ]
+                                "id": "003@1.0.0",
+                                "host": "RuleRequest003",
+                                "cfg": "1.0.0"
                             }
                         ]
                     }

@@ -3,7 +3,7 @@
 import { type SemiBoxedExpression } from '@cortex-js/compute-engine';
 import { type RuleResult } from '@frmscoe/frms-coe-lib/lib/interfaces';
 import { computeEngine, loggerService } from '..';
-import { type ExpressionMathJSON, type IRuleValue } from '../interfaces/iTypologyExpression';
+import { type ExpressionMathJSON, type IRuleValue } from '@frmscoe/frms-coe-lib/lib/interfaces/processor-files/TypologyConfig';
 
 export const evaluateTypologyExpression = (
   ruleValues: IRuleValue[],
